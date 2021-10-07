@@ -12,7 +12,7 @@
 	<artifactId>dan-ms-envio</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>dan-ms-envio</name>
-	<description>Repositorio microservicio envios</description>
+	<description>Repositorio microservicio envíos</description>
 	<properties>
 		<java.version>11</java.version>
 		<springdoc.openapi.ui.version>1.5.7</springdoc.openapi.ui.version>
@@ -21,6 +21,7 @@
 		<maven.project.info.reports.plugin.version>3.1.2</maven.project.info.reports.plugin.version>
 		<dockerfile.maven.plugin.version>1.4.13</dockerfile.maven.plugin.version>
 		<keycloak.version>15.0.1</keycloak.version>
+		<spring.cloud.version>2020.0.3</spring.cloud.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -51,6 +52,18 @@
 			<artifactId>keycloak-spring-boot-starter</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>${springdoc.openapi.ui.version}</version>
@@ -68,6 +81,13 @@
 				<groupId>org.keycloak.bom</groupId>
 				<artifactId>keycloak-adapter-bom</artifactId>
 				<version>${keycloak.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring.cloud.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -103,14 +123,24 @@
 					</execution>
 				</executions>
 				<configuration>
-					<repository>dan/dan-ms-material</repository>
+					<repository>dan/${project.artifactId}</repository>
 					<tag>${project.version}</tag>
 					<buildArgs>
-						<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+						<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
 					</buildArgs>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>${maven.project.info.reports.plugin.version}</version>
+			</plugin>
+		</plugins>
+	</reporting>
 
 </project>

@@ -5,6 +5,7 @@ import javax.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +31,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  */
 @RestController
 @RequestMapping(Api.ENVIO_BASE_PATH)
+@CrossOrigin
 @Tag(name = "EnvioRest", description = "Permite gestionar los envíos realizados por los empleados de la empresa.")
 public class EnvioRest
 {
@@ -172,4 +174,14 @@ public class EnvioRest
 			}
 		}
 	*/
+
+	@GetMapping(path = "/instancia")
+	@Operation(summary = "Retorna información de la instancia.")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Información de la instancia"),
+		@ApiResponse(responseCode = "401", description = "No autorizado"), @ApiResponse(responseCode = "403", description = "Prohibido"),
+		@ApiResponse(responseCode = "404", description = "Recurso no encontrado") })
+	public ResponseEntity<?> instancia()
+	{
+		return ResponseEntity.ok("dan-ms-envio -> [OK]");
+	}
 }
